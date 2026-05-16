@@ -42,7 +42,7 @@ ReFreeKV/
 ## Installation
 
 ```bash
-git clone https://github.com/your-username/ReFreeKV.git
+git clone https://github.com/Patrick-Ni/ReFreeKV.git
 cd ReFreeKV
 pip install -r requirements.txt
 ```
