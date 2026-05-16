@@ -22,20 +22,18 @@ ReFreeKV/
 ├── utils.py                    # General utility functions
 ├── metrics.py                  # Evaluation metrics (F1, ROUGE, etc.)
 ├── theoremqa_utils.py          # TheoremQA-specific evaluation utilities
-├── needle_in_haystack.py       # Needle-in-a-Haystack evaluation
 ├── modified_models/            # Core KV cache pruning implementations
 │   ├── monkeypatch.py          # Model monkey-patching for attention replacement
 │   ├── evict_utils.py          # KV cache eviction strategies
 │   ├── dynamic_metrics.py      # Dynamic budget adjustment metrics
 │   ├── llama_model.py          # Modified LLaMA attention modules
 │   ├── mistral_model.py        # Modified Mistral attention modules
-│   └── qwen_model.py           # Modified Qwen2 attention modules
+│   └── qwen_model.py          # Modified Qwen2 attention modules
 ├── scripts/                    # Example run scripts
 │   ├── run_refreekv.sh         # Run ReFreeKV (dynamic budget)
 │   ├── run_fullkv.sh           # Run Full KV baseline
 │   ├── run_baseline.sh         # Run fixed-budget baselines (H2O, StreamingLLM, SnapKV)
-│   ├── run_eval.sh             # Evaluate results
-│   └── run_needle.sh           # Needle-in-a-Haystack evaluation
+│   └── run_eval.sh             # Evaluate results
 ├── data/                       # Place datasets here
 ├── requirements.txt
 └── LICENSE
@@ -59,7 +57,6 @@ Download and place the datasets under the `data/` directory:
 - **TruthfulQA**: Download from [TruthfulQA](https://github.com/sylinrl/TruthfulQA) and save as `data/TruthfulQA.csv`
 - **TheoremQA**: Save as `data/theoremqa.json`
 - **GPQA**: Save as `data/gpqa_main.json`
-- **Needle-in-a-Haystack**: Place Paul Graham essays under `data/PaulGrahamEssays/`
 
 ## Usage
 
@@ -115,18 +112,6 @@ CUDA_VISIBLE_DEVICES=0 python main.py \
 python eval.py --path outputs/gsm8k/refreekv/ --dataset gsm8k --sort --key threshold
 ```
 
-### Needle-in-a-Haystack
-
-```bash
-python needle_in_haystack.py \
-    --model_name meta-llama/Meta-Llama-3-8B-Instruct \
-    --model_provider LLaMA3 \
-    --model_version llama3_refreekv \
-    --s_len 1000 --e_len 8000 --step 1000 \
-    --method h2o --max_capacity_prompt 128 \
-    --attn_implementation eager
-```
-
 ## Supported Models
 
 - LLaMA-2 (7B, 13B, etc.)
@@ -144,7 +129,6 @@ python needle_in_haystack.py \
 | **Classification** | TREC |
 | **Multiple Choice** | QuALITY, GPQA, MMLU-STEM |
 | **Factuality** | TruthfulQA |
-| **Retrieval** | Needle-in-a-Haystack |
 
 ## Key Arguments
 
